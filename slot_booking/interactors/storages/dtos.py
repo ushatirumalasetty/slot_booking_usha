@@ -4,6 +4,15 @@ from typing import List
 from slot_booking.constants.enums import *
 
 @dataclass
+class UserDto:
+   user_id:int
+   first_name:str
+   last_name:str
+   user_name:str
+   role: UserRole
+
+
+@dataclass
 class WashingMachineDto:
    washing_machine_id:int
    status:WashingMachineStatus
@@ -38,6 +47,11 @@ class SlotStatusDto:
     start_time: str
     end_time: str
     is_avilable: bool
+
+@dataclass
+class SlotCompleteStatusDto:
+    date: str
+    slots: List[SlotStatusDto]
 
 @dataclass
 class DateSlotStatusDto:

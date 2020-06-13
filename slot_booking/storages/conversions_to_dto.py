@@ -3,8 +3,8 @@ from slot_booking.interactors.storages.dtos import *
 
 def convert_to_washing_machine_wise_slot_dto(washing_machine_slots_obj):
     return WashingMachineWiseSlotDto(
-            start_time=washing_machine_slots_obj.start_time.strftime("%H:%M"),
-            end_time=washing_machine_slots_obj.end_time.strftime("%H:%M"))
+            start_time=washing_machine_slots_obj.start_time.strftime("%H:%M%p"),
+            end_time=washing_machine_slots_obj.end_time.strftime("%H:%M %p"))
 
 def convert_to_dto_list(washing_machine_slots_objs_list):
         slot_timings_dtos_list=[]
@@ -16,10 +16,10 @@ def convert_to_dto_list(washing_machine_slots_objs_list):
 
 def convert_to_previous_or_upcomming_slots_dto(user_previous_slot_obj):
     return PreviousOrUpcommingSlotsDto(
-            start_time=user_previous_slot_obj.start_time.strftime("%H:%M"),
-            end_time=user_previous_slot_obj.end_time.strftime("%H:%M"),
+            start_time=user_previous_slot_obj.start_time.strftime("%H:%M %p"),
+            end_time=user_previous_slot_obj.end_time.strftime("%H:%M %p"),
             washing_machine_id=user_previous_slot_obj.washing_machine_id,
-               date=user_previous_slot_obj.date.strftime("%d-%b-%Y"))
+               date=user_previous_slot_obj.date.strftime("%Y-%m-%d"))
 
 def convert_to_previous_or_upcomming_slots_dto_list(user_previous_or_upcomming_slots_obj_list):
         user_previous_or_upcomming_slots_dtos_list=[]
@@ -28,6 +28,13 @@ def convert_to_previous_or_upcomming_slots_dto_list(user_previous_or_upcomming_s
             user_previous_or_upcomming_slots_dtos_list.\
             append(user_previous_or_upcomming_slots_dto)
         return user_previous_or_upcomming_slots_dtos_list
+    
+def convert_to_slots_complete_details_dto(slots_status_dto_list, date_obj):      
+    slot_complete_details_dto=SlotCompleteStatusDto(
+            date= date_obj,
+            slots= slots_status_dto_list
+        )
+    return slot_complete_details_dto
     
 
 def convert_to_washing_details_dto(washing_machines_obj):

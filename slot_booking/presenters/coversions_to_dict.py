@@ -33,17 +33,28 @@ def convert_washing_machines_details_dtos_list_to_dict(washing_machines_details_
         washing_machines_details_list.append(washing_machines_details_dict)
     return washing_machines_details_list
     
+
     
 def convert_datewise_slots_till_range_dtos_list_to_dict(avilable_slots):
     datewise_slots_till_range_dtos_list=[]
+    slot_complete_details_list=[]
     for datewise_slots_till_range_dto in avilable_slots:
-        datewise_slots_till_range_dict={
-            "start_time": datewise_slots_till_range_dto.start_time,
-            "end_time": datewise_slots_till_range_dto.end_time,
-            "is_available": datewise_slots_till_range_dto.is_avilable
-        }
-        datewise_slots_till_range_dtos_list.append(datewise_slots_till_range_dict)
-    return datewise_slots_till_range_dtos_list
+        date=datewise_slots_till_range_dto.date.strftime("%Y-%m-%d")
+        for slot in datewise_slots_till_range_dto.slots:
+            datewise_slots_till_range_dict={
+                "start_time": slot.start_time.strftime("%H:%M %p"),
+                "end_time": slot.end_time.strftime("%H:%M %p"),
+                "is_available": slot.is_avilable
+            }
+            datewise_slots_till_range_dtos_list.append(datewise_slots_till_range_dict)
+        slots_complete_details={
+            "date": date,
+            "slots":datewise_slots_till_range_dtos_list
+            }
+        datewise_slots_till_range_dtos_list=[]
+        slot_complete_details_list.append(slots_complete_details)    
+    return slot_complete_details_list
+        
     
 def convert_responses_of_an_dto_to_dict(requests_details_dto):
     requests_details_list=[]

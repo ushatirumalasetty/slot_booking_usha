@@ -14,14 +14,11 @@ class AddAWashingMachineInteractor:
         self.presenter=presenter
 
     def add_a_washing_machine_interactor(self,
-                              washing_machine_id:str):
-        try:
-            self.storage.check_if_washing_machine_id_exits(washing_machine_id)
-        except WashingMachineAlreadyExists:
-            self.presenter.raise_washing_machine_already_exist()
+                              washing_machine_id:str,
+                              status:WashingMachineStatus):
         
         self.storage.\
-        add_a_washing_machine(washing_machine_id=washing_machine_id)
+        add_a_washing_machine(washing_machine_id=washing_machine_id,status=status)
     
 
     

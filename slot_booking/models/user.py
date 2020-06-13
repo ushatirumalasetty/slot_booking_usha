@@ -3,12 +3,14 @@ from django.db import models
 from slot_booking.constants.enums import *
 
 class User (AbstractUser):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, null=False)
+    last_name = models.CharField(max_length=50, null=False)
     user_name = models.CharField(max_length=50, null=False)
+    role=models.CharField(max_length=50, choices=UserRole.get_list_of_tuples(),
+                                                    default="USER")
 
 class WashingMachine(models.Model):
-    washing_machine_id = models.CharField(max_length=50)
+    washing_machine_id = models.CharField(max_length=50, null=False)
     status= models.CharField(
       max_length=10,
       choices=[(washing_machine_status.name,washing_machine_status.value)
@@ -20,8 +22,8 @@ class WashingMachineSlot(models.Model):
     washing_machine = models.ForeignKey(WashingMachine,
                              on_delete=models.CASCADE,
                              related_name='washing_machine_bookings')
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(null=False)
+    end_time = models.TimeField(null=False)
     day= models.CharField(
       max_length=10,
       choices=[(day.name,day.value) for day in Days]
@@ -30,21 +32,22 @@ class WashingMachineSlot(models.Model):
 
 class UserSlot(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name='user_bookings')
+                             null=False)
     washing_machine= models.ForeignKey(WashingMachineSlot, on_delete=models.CASCADE,
-                             related_name='slot_bookings')
-    date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+                             null=False)
+    date = models.DateField(null=False)
+    start_time = models.TimeField(null=False)
+    end_time = models.TimeField(null=False)
 
 class DaysRange(models.Model):
-    days_range = models.IntegerField()
+    days_range = models.IntegerField(null=False)
 
 
 class Request(models.Model):
-    requested_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
-    requested_user_slot = models.ForeignKey(UserSlot, on_delete=models.CASCADE)
+    requested_by = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    date = models.DateField(null=False)
+    requested_user_slot = models.ForeignKey(UserSlot, on_delete=models.CASCADE,
+                                  null=False)
     request_status= models.CharField(
       max_length=10,
       choices=[(request_status.name,request_status.value)

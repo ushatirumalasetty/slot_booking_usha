@@ -17,7 +17,7 @@ class OAuthUserAuthTokensService:
 
     def create_user_auth_tokens(self, user_id):
         from django.conf import settings
-
+        
         application, _ = self.oauth2_storage.get_or_create_default_application(
             user_id=user_id
         )

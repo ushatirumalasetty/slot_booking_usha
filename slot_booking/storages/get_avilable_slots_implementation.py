@@ -32,7 +32,9 @@ class StorageImplementation(StorageInterface):
         for user_booked_date in list_of_user_booked_dates:
             if user_booked_date > today_date:
                 has_upcomming_date = True
-                return has_upcomming_date
+                
+        
+        slot_complete_details_dto_list=[]
         
         if list_of_user_booked_dates == []:
             for date_obj in list_of_dates_to_be_displayed:
@@ -50,10 +52,13 @@ class StorageImplementation(StorageInterface):
                                     slot_status_dto = convert_to_slots_dto(start_time=start_time,end_time=end_time,is_avilable=False)
                                 else:
                                     slot_status_dto = convert_to_slots_dto(start_time=start_time,end_time=end_time,is_avilable=True)
-                                slots_status_dto_list.append(slot_status_dto)
-                            
-                                
-            return slots_status_dto_list
+                                    slots_status_dto_list.append(slot_status_dto)
+                slot_complete_details_dto = convert_to_slots_complete_details_dto(slots_status_dto_list,date_obj)        
+                slot_complete_details_dto_list.append(slot_complete_details_dto)
+                slots_status_dto_list=[]
+             
+                           
+            return slot_complete_details_dto_list
         else:
             if has_upcomming_date:
                     for date_obj in list_of_dates_to_be_displayed:
@@ -65,11 +70,16 @@ class StorageImplementation(StorageInterface):
                                 end_time = slot_obj.end_time
                                 slot_status_dto = convert_to_slots_dto(start_time=start_time,end_time=end_time,is_avilable=False)
                                 slots_status_dto_list.append(slot_status_dto)
+                        slot_complete_details_dto = convert_to_slots_complete_details_dto(slots_status_dto_list,date_obj)        
+                        slot_complete_details_dto_list.append(slot_complete_details_dto)
+                        slots_status_dto_list=[]
+             
+                        
             else:
-                    for date in list_of_dates_to_be_displayed:
+                    for date_obj in list_of_dates_to_be_displayed:
                         for washing_machine_obj in washing_machines_obj_list:
                             if washing_machine_obj.status == "ACTIVE":
-                                day_of_date = date.strftime("%A").upper()
+                                day_of_date = date_obj.strftime("%A").upper()
                                 slots_obj_list = WashingMachineSlot.objects.filter(day=day_of_date,washing_machine=washing_machine_obj)
                                 for slot_obj in slots_obj_list:
                                     start_time = slot_obj.start_time
@@ -82,6 +92,11 @@ class StorageImplementation(StorageInterface):
                                     else:
                                         slot_status_dto = convert_to_slots_dto(start_time=start_time,end_time=end_time,is_avilable=True)
      
+             
                                     slots_status_dto_list.append(slot_status_dto)
-            return slots_status_dto_list
-
+                        slot_complete_details_dto = convert_to_slots_complete_details_dto(slots_status_dto_list,date_obj)        
+                        slot_complete_details_dto_list.append(slot_complete_details_dto)
+                        slots_status_dto_list=[]
+             
+            
+            return slot_complete_details_dto_list

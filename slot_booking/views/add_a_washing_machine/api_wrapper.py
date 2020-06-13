@@ -1,29 +1,21 @@
-from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
-    import validate_decorator
-from .validator_class import ValidatorClass
+import json
+
+from django.http import HttpResponse
+from slot_booking.interactors.add_a_washing_machine_interactor import \
+    AddAWashingMachineInteractor
+from slot_booking.presenters.presenter_implementation import PresenterImplementation
+from slot_booking.storages.add_a_washing_machine_implementation import StorageImplementation
 
 
-@validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
-    # ---------MOCK IMPLEMENTATION---------
-
-    try:
-        from slot_booking.views.add_a_washing_machine.tests.test_case_01 \
-            import TEST_CASE as test_case
-    except ImportError:
-        from slot_booking.views.add_a_washing_machine.tests.test_case_01 \
-            import test_case
-
-    from django_swagger_utils.drf_server.utils.server_gen.mock_response \
-        import mock_response
-    try:
-        from slot_booking.views.add_a_washing_machine.request_response_mocks \
-            import RESPONSE_200_JSON
-    except ImportError:
-        RESPONSE_200_JSON = ''
-    response_tuple = mock_response(
-        app_name="slot_booking", test_case=test_case,
-        operation_name="add_a_washing_machine",
-        kwargs=kwargs, default_response_body=RESPONSE_200_JSON,
-        group_name="")
-    return response_tuple[1]
+    
+    request_data = kwargs['request_data']
+    washing_machine_id = request_data['washing_machine_id']
+    status=request_data['status']
+    storage = StorageImplementation()
+    presenter = PresenterImplementation()
+    interactor = AddAWashingMachineInteractor(storage=storage,presenter=presenter)
+    
+    interactor.add_a_washing_machine_interactor(washing_machine_id=washing_machine_id, status=status)
+    
+    return HttpResponse(status=201)

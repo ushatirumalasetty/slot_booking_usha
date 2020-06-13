@@ -13,7 +13,7 @@ class GetAvilableSlotsInteractor:
 
     def get_slots_for_particular_days_with_avilablity_status(self, user_id:int):
         list_of_datewise_slots = self.storage.\
-                                 get_list_of_datewise_slots_till_range(user_id = user_id)
+                                 get_slots_for_particular_days_with_avilablity_status(user_id = user_id)
         return self.presenter.\
                get_response_of_list_of_datewise_slots_till_range(list_of_datewise_slots)
 

@@ -508,7 +508,8 @@
       "get": {
         "security": [{
           "oauth": [
-						"superuser"
+						"read",
+						"write"
 					]
 				}],
         "summary": "Get the details of slots of the specific washing machine on a particular day",
@@ -528,7 +529,8 @@
       "post": {
         "security": [{
           "oauth": [
-						"superuser"
+						"read",
+						"write"
 					]
 				}],
         "summary": "add the details of slots of the specific washing machine on a particular day",
@@ -548,7 +550,8 @@
       "post": {
         "security": [{
           "oauth": [
-						"superuser"
+						"read",
+						"write"
 					]
 				}],
         "summary": "add a washing machine",
@@ -568,7 +571,8 @@
       "post": {
         "security": [{
           "oauth": [
-						"superuser"
+						"read",
+						"write"
 					]
 				}],
         "summary": "update the details of slots of the specific washing machine on a particular day",
@@ -588,7 +592,8 @@
       "get": {
         "security": [{
           "oauth": [
-						"superuser"
+            "read",
+						"write"
 					]
 				}],
         "summary": "get list of previous slots",
@@ -605,7 +610,8 @@
       "get": {
         "security": [{
           "oauth": [
-						"superuser"
+            "read",
+						"write"
 					]
 				}],
         "summary": "get list of upcomming slots",
@@ -620,11 +626,6 @@
     },
     "/user/sign_up/v1/": {
       "post": {
-        "security": [{
-          "oauth": [
-						"superuser"
-					]
-				}],
         "summary": "User sign up",
         "operationId": "user_sign_up",
         "description": "user details for signing up",
@@ -659,7 +660,10 @@
         "operationId": "get_user_profile",
         "description": "Returns first_name, last_name and user_name profile_details of an user",
         "security": [{
-          "oauth": ["superuser"]
+          "oauth": [
+            "read",
+            "write"
+          ]
 				}],
         "responses": {
           "200": {
@@ -674,7 +678,10 @@
         "operationId": "get_requests_of_an_user",
         "description": "Returns requests details of an user",
         "security": [{
-          "oauth": ["superuser"]
+          "oauth": [
+            "read",
+            "write"
+          ]
 				}],
         "responses": {
           "200": {
@@ -690,7 +697,8 @@
         "description": "Returns slots and their status of avilability on a specific day till particular days from the present day",
         "security": [{
           "oauth": [
-						"superuser"
+            "read",
+						"write"
 					]
 				}],
         "responses": {
@@ -707,7 +715,8 @@
         "description": "get details of all the washing machines",
         "security": [{
           "oauth": [
-						"superuser"
+						"read",
+						"write"
 					]
 				}],
         "responses": {
@@ -724,7 +733,8 @@
         "description": "book an required avilable slot and return washing machine id and slot timings",
         "security": [{
           "oauth": [
-						"superuser"
+						"read",
+						"write"
 					]
 				}],
         "parameters": [{

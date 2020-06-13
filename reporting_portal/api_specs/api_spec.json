@@ -1,212 +1,156 @@
 {
-        "swagger": "2.0",
-        "host": "127.0.0.1:8000",
-        "basePath": "/api/reporting_portal/",
-        "info": {
-            "version": "1.0.0",
-            "title": "Simple API",
-            "description": "A simple API to learn how to write OpenAPI Specification"
-        },
-        "schemes": [
-            "http"
-        ],
-        "consumes": [
-            "application/json"
-        ],
-        "produces": [
-            "application/json"
-        ],
-        "securityDefinitions": {
-            "oauth": {
-                "tokenUrl": "http://auth.ibtspl.com/oauth2/",
-                "flow": "password",
-                "scopes": {
-                    "read": "read users",
-                    "write": "create users",
-                    "update": "update users",
-                    "delete": "delete users"
-                },
-                "type": "oauth2"
-            }
-        },
-        "security": [],
-        "definitions": {
-            "TodoId": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer"
-                    }
-                }
+    "swagger": "2.0",
+    "host": "127.0.0.1:8080",
+    "basePath": "/reporting_portal/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Reporting Portal",
+        "description": "Reporting Portal"
+    },
+    "schemes": [
+		"https",
+		"http"
+	],
+    "consumes": [
+		"application/json"
+	],
+    "produces": [
+		"application/json"
+	],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users",
+                "superuser": "super user permission"
             },
-            "BasicTodo": {
+            "type": "oauth2"
+        }
+    },
+    "definitions": {
+        "SlotDefinitions": {
+            "type": "array",
+            "items": {
                 "type": "object",
                 "properties": {
-                    "description": {
+                    "start_time": {
                         "type": "string"
                     },
-                    "is_completed": {
-                        "type": "boolean"
-                    },
-                    "remind_at": {
+                    "end_time": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "description"
-                ]
+					"start_time",
+					"end_time"
+				]
+            }
+        },
+        "UserDefinitions": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
             },
-            "Todo": {
-                "allOf": [
-                    {
-                        "$ref": "#/definitions/BasicTodo"
+            "required": [
+					"user_id",
+					"first_name",
+					"last_name",
+					"user_name"
+				]
+        },
+    },
+    "parameters": {
+        "WashingMachineWiseDaySlotsParameter": {
+            "name": "WashingMachineWiseDaySlots",
+            "description": "slots of an particular washing machine on a particular day",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "day": {
+                        "type": "string",
+                        "enum": [
+							"SUNDAY",
+							"MONDAY",
+							"TUESDAY",
+							"WEDNESDAY",
+							"THURSDAY",
+							"FRIDAY",
+							"SATERDAY"
+						]
                     },
-                    {
-                        "$ref": "#/definitions/TodoId"
+                    "washing_machine_id": {
+                        "type": "string"
                     }
-                ]
+                },
+                "required": [
+					"day",
+					"washing_machine_id"
+				]
             }
         },
-        "parameters": {
-            "TodoId": {
-                "description": "todo id",
-                "in": "path",
-                "name": "id",
-                "required": true,
-                "type": "integer"
-            },
-            "BasicTodo": {
-                "description": "Todo Parameter",
-                "in": "body",
-                "name": "todo",
-                "required": true,
-                "schema": {
-                    "$ref": "#/definitions/BasicTodo"
+        "GetDateWiseSlotResponse": {
+            "description": "Get Datewise Slots available and booked",
+            "schema": {
+                "$ref": "#/definitions/SlotsWithExtraFieldDate"
+            }
+        }
+    },
+    "paths": {
+        "/update/washing_machine_slots/v1/": {
+            "post": {
+                "security": [{
+                    "oauth": [
+						"read",
+						"write"
+					]
+				}],
+                "summary": "update the details of slots of the specific washing machine on a particular day",
+                "operationId": "update_slots_of_washing_machine_on_a_day",
+                "description": "update the details of slots of the specific washing machine on a particular day",
+                "parameters": [{
+                    "$ref": "#/parameters/UpdateAWashingMachineSlotParameter"
+				}],
+                "responses": {
+                    "200": {
+                        "description": "Successfull"
+                    }
                 }
             }
         },
-        "responses": {
-            "SuccessResponse": {
-                "description": "success response"
-            }
-        },
-        "paths": {
-            "/todos/": {
-                "get": {
-                    "summary": "Get all todos",
-                    "description": "Returns a list containing all todos.",
-                    "operationId": "get_todos",
-                    "security": [
-                        {
-                            "oauth": [
-                                "read"
-                            ]
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "A list of todos",
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/Todo"
-                                }
-                            }
-                        }
-                    }
-                },
-                "post": {
-                    "summary": "create a todo",
-                    "description": "Create a todo",
-                    "operationId": "create_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "write"
-                            ]
-                        }
-                    ],
-                    "parameters": [
-                        {
-                            "$ref": "#/parameters/BasicTodo"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "create a todo",
-                            "schema": {
-                                "$ref": "#/definitions/TodoId"
-                            }
-                        }
-                    }
-                }
-            },
-            "/todos/{id}/": {
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/TodoId"
-                    }
-                ],
-                "get": {
-                    "summary": "Get a todo",
-                    "description": "Returns a todo.",
-                    "operationId": "get_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "read"
-                            ]
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "A todo",
-                            "schema": {
-                                "$ref": "#/definitions/Todo"
-                            }
-                        }
-                    }
-                },
-                "put": {
-                    "parameters": [
-                        {
-                            "$ref": "#/parameters/BasicTodo"
-                        }
-                    ],
-                    "summary": "Updates a todo",
-                    "description": "Updates a todo.",
-                    "operationId": "update_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "update"
-                            ]
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "$ref": "#/responses/SuccessResponse"
-                        }
-                    }
-                },
-                "delete": {
-                    "summary": "Deletes a todo",
-                    "description": "Deletes a todo.",
-                    "operationId": "delete_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "delete"
-                            ]
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "$ref": "#/responses/SuccessResponse"
-                        }
+        "/previous/slots/v1/": {
+            "get": {
+                "security": [{
+                    "oauth": [
+                        "read",
+						"write"
+					]
+				}],
+                "summary": "get list of previous slots",
+                "operationId": "list_of_previous_slots",
+                "description": "get the details of previous slots in a list",
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/PreviousSlotResponse"
                     }
                 }
             }
         }
     }
-    
+}
