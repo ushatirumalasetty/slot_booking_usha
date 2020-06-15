@@ -211,10 +211,10 @@
           }
         },
         "required": [
-					"user_name",
-					"passward",
-					"confirm_passward"
-				]
+  					"user_name",
+  					"passward",
+  					"confirm_passward"
+  				]
       }
     },
     "UserLoginParameter": {
