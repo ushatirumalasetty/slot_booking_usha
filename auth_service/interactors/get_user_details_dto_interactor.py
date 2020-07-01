@@ -12,7 +12,7 @@ class UserDetailsDto:
     
 class InvalidUserId(Exception):
     pass
-
+# TODO: maintain two line after class
 class GetUserDetails:
     def __init__(self, storage, presenter):
         self.storage = storage
@@ -35,7 +35,7 @@ class GetUserDetails:
         user_objs = self.storage.get_user_objects(user_ids)
 
         for user_obj in user_objs:
-            user_details_dto = UserDetailsDto(user_name = user_obj.user_name,
+            user_details_dto = UserDetailsDto(user_name = user_obj.user_name, # TODO: clean code 
                                           first_name = user_obj.first_name,
                                           last_name = user_obj.last_name,
                                           role = user_obj.role,
