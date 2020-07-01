@@ -14,40 +14,42 @@ class StorageImplementation(StorageInterface):
     def get_washing_machine_wise_day_wise_slots(self,day:Days,
                                                      washing_machine_id:str):
 
-        self.validate_washing_machine_id(washing_machine_id)
+        self.validate_washing_machine_id(washing_machine_id=washing_machine_id)
 
-        self.validate_day(day)
-
-        self.validate_if_day_belong_to_washing_machine(day,washing_machine_id)
+        self.validate_if_day_belong_to_washing_machine(day=day,
+                                        washing_machine_id=washing_machine_id)
 
         washing_machine_related_slots_on_a_day_obj_list = WashingMachineSlot.\
-        objects.\
-        filter(day=day, washing_machine__washing_machine_id=washing_machine_id)
+        objects.filter(day=day,
+                       washing_machine__washing_machine_id=washing_machine_id)
 
         washing_machine_related_slots_on_a_day_dto_list = convert_to_dto_list(
             washing_machine_related_slots_on_a_day_obj_list)
 
         return washing_machine_related_slots_on_a_day_dto_list
-
+    
+    
     def validate_washing_machine_id(self, washing_machine_id: str):
-        is_valid_washing_machine_id = WashingMachine.objects.filter(washing_machine_id=washing_machine_id).exists()
+        
+        is_valid_washing_machine_id = WashingMachine.objects.\
+        filter(washing_machine_id=washing_machine_id).exists()
+        
         is_invalid_washing_machine_id = not is_valid_washing_machine_id
+        
         if is_invalid_washing_machine_id:
             raise InvalidWashingMachineId
-        return
-
-    def validate_day(self, day: Days):
-        days = [day.value for day in Days]
-        if day not in days:
-            raise InvalidDay
-        return
+   
 
     def validate_if_day_belong_to_washing_machine(self, day:Days,
                                                   washing_machine_id:str):
-        washing_machines=WashingMachine.objects.filter(washing_machine_id=washing_machine_id)
-        is_day_belong_to_washing_machine=WashingMachineSlot.objects.filter(washing_machine=washing_machines[0],day=day).exists()
+        
+        washing_machines=WashingMachine.objects.\
+        filter(washing_machine_id=washing_machine_id)
+        
+        is_day_belong_to_washing_machine=WashingMachineSlot.objects.\
+        filter(washing_machine=washing_machines[0],day=day).exists()
+        
         is_day_doesnt_belong_to_washing_machine = not is_day_belong_to_washing_machine
+        
         if is_day_doesnt_belong_to_washing_machine:
             raise DayDoesntBelongToWashingMachine
-        return
-

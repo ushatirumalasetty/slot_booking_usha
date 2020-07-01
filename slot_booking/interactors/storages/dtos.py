@@ -66,7 +66,7 @@ class DatewiseSlotStatusListDto:
 class PreviousOrUpcommingSlotsDto:
     start_time: str
     end_time: str
-    washing_machine_id: str
+    washing_machine_slot_id: str
     date: date
 
 @dataclass

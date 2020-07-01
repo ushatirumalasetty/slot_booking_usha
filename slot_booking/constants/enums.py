@@ -1,5 +1,9 @@
 from enum import Enum
 from ib_common.constants import BaseEnumClass
+class UserRole(BaseEnumClass, Enum):
+    ADMIN="ADMIN"
+    USER="USER"
+
 class Slots(Enum):
     slot1 = "05:00AM - 06:00AM"
     slot2 = "06:00AM - 07:00AM"
@@ -39,13 +43,13 @@ class Days(Enum):
     THURSDAY="THURSDAY"
     FRIDAY="FRIDAY"
     SATuERDAY="SATuERDAY"
-    
-    
+
+
 class RequestStatus(Enum):
     APPROVED="APPROVED"
     REJECTED="REJECTED"
     PENDING="PENDING"
-    
+
 class UserRole(BaseEnumClass, Enum):
     ADMIN="ADMIN"
     USER="USER"

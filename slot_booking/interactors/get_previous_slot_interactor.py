@@ -19,4 +19,3 @@ class GetPreviousSlotsInteractor:
         return self.presenter.\
         get_reponse_for_previous_slots_list(
             previous_slots_list=previous_slots_dto)
-        

@@ -1,13 +1,5 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from slot_booking.constants.enums import *
-
-class User (AbstractUser):
-    first_name = models.CharField(max_length=50, null=False)
-    last_name = models.CharField(max_length=50, null=False)
-    user_name = models.CharField(max_length=50, null=False)
-    role=models.CharField(max_length=50, choices=UserRole.get_list_of_tuples(),
-                                                    default="USER")
 
 class WashingMachine(models.Model):
     washing_machine_id = models.CharField(max_length=50, null=False)
@@ -31,9 +23,8 @@ class WashingMachineSlot(models.Model):
 
 
 class UserSlot(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             null=False)
-    washing_machine= models.ForeignKey(WashingMachineSlot, on_delete=models.CASCADE,
+    user_id = models.IntegerField(null=False)
+    washing_machine_slot= models.ForeignKey(WashingMachineSlot, on_delete=models.CASCADE,
                              null=False)
     date = models.DateField(null=False)
     start_time = models.TimeField(null=False)
@@ -44,10 +35,10 @@ class DaysRange(models.Model):
 
 
 class Request(models.Model):
-    requested_by = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    requested_by = models.IntegerField(null=False)
     date = models.DateField(null=False)
     requested_user_slot = models.ForeignKey(UserSlot, on_delete=models.CASCADE,
-                                  null=False)
+                                 null=False)
     request_status= models.CharField(
       max_length=10,
       choices=[(request_status.name,request_status.value)

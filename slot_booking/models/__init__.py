@@ -1,4 +1,4 @@
 from .user import *
 
-__all__ = ["User"]
+__all__ = ["WashingMachine", "WashingMachineSlot", "UserSlot", "DaysRange", "Request"]
 

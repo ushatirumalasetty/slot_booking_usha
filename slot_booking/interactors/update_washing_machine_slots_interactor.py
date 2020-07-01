@@ -10,6 +10,10 @@ class UpdateWashingMachineWiseDaySlotsInteractor:
     def __init__(self, storage: StorageInterface,presenter: PresenterInterface):
         self.storage = storage
         self.presenter=presenter
+        
+        
+        
+    
 
     def update_washing_machine_wise_day_wise_slots(self,
                                                 day:Days,

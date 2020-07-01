@@ -56,3 +56,4 @@ class TestGetPreviousSlotInteractor:
         )
 
         assert actual_result == expected_output
+  

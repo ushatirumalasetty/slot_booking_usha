@@ -1,0 +1,130 @@
+{
+    "swagger": "2.0",
+    "host": "127.0.0.1:8080",
+    "basePath": "/auth_service/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Slot Booking",
+        "description": "Slot Booking"
+    },
+    "schemes": [
+		"https",
+		"http"
+	],
+    "consumes": [
+		"application/json"
+	],
+    "produces": [
+		"application/json"
+	],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users",
+                "superuser": "super user permission"
+            },
+            "type": "oauth2"
+        }
+    },
+    "parameters": {
+        "UserSignUpParameter": {
+            "name": "Signup",
+            "description": "details for an user sign up",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "user_name": {
+                        "type": "string"
+                    },
+                    "passward": {
+                        "type": "string"
+                    },
+                    "confirm_passward": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+  					"user_name",
+  					"passward",
+  					"confirm_passward"
+  				]
+            }
+        },
+        "UserLoginParameter": {
+            "name": "Login",
+            "description": "user login details",
+            "in": "body",
+            "required": true,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+					"username",
+					"password"
+				]
+            }
+        }
+    },
+    "responses": {
+        "GetAccessTokenResponse": {
+            "description": "Success Response",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+					"access_token"
+				]
+            }
+        }
+    },
+    "paths": {
+        "/user/sign_up/v1/": {
+            "post": {
+                "summary": "User sign up",
+                "operationId": "user_sign_up",
+                "description": "user details for signing up",
+                "parameters": [{
+                    "$ref": "#/parameters/UserSignUpParameter"
+				}],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/GetAccessTokenResponse"
+                    }
+                }
+            }
+        },
+        "/user/login/v1/": {
+            "post": {
+                "summary": "User login",
+                "operationId": "user_log_in",
+                "description": "user log in details",
+                "parameters": [{
+                    "$ref": "#/parameters/UserLoginParameter"
+				}],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/GetAccessTokenResponse"
+                    }
+                }
+            }
+        }
+    }
+}
