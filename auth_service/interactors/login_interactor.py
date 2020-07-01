@@ -10,16 +10,16 @@ from auth_service.common.oauth2_storage import OAuth2SQLStorage
 class UserLginInteractor:
 
 
-    def __init__(self, storage: StorageInterface ,oauth2_storage: OAuth2SQLStorage, presenter: PresenterInterface):
+    def __init__(self, storage: StorageInterface ,oauth2_storage: OAuth2SQLStorage, presenter: PresenterInterface): # TODO: Clean code
         self.storage = storage
-        self.presenter=presenter
+        self.presenter=presenter # TODO: no need of presenter
         self.oauth2_storage = oauth2_storage
- 
+    # TODO: no need or two lines
    
-    def login_wrapper(self, username:str, password: str):
+    def login_wrapper(self, username:str, password: str):# TODO: clean code maintain space betwee :
         
         try:
-            self.login(username=username, password=password)
+            self.login(username=username, password=password) # TODO: return value
         
         except InvalidUserName:
             self.presenter.raise_exception_for_invalid_username()
@@ -43,7 +43,7 @@ class UserLginInteractor:
         self.storage.validate_user_name(username=username)
         
         user_id = self.storage.validate_password(username=username, password=password)
-        
+        # TODO: try to maintain service_adapter if possible for service
         service = OAuthUserAuthTokensService(oauth2_storage=self.oauth2_storage)
 
         tokens_dto = service.create_user_auth_tokens(user_id=user_id)
@@ -52,7 +52,7 @@ class UserLginInteractor:
 
         return tokens_dto,user_login_dto
 
-        
+# TODO: maintain exceptions in exceptions files
 class InvalidUserName(Exception):
     pass
 
