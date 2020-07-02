@@ -1,16 +1,16 @@
 from unittest.mock import create_autospec
 
-from auth_service.interactors.login_interactor import *
+from auth_service.interactors.login_interactor import * # TODO: NOT TO USE * AS PER CLEAN CODE
 from auth_service.interactors.presenters.presenter_interface import \
     PresenterInterface
 from auth_service.interactors.storages.login_interface import StorageInterface
 from auth_service.common.oauth2_storage import OAuth2SQLStorage
 import pytest
-
+# TODO: CLEAN CODE
 class TestGetAvilableSlotsInteractor:
 
-    def test_invalid_username(self):
-        
+    def test_invalid_username(self): # TODO: TRY TO MAINTAIN FUNCTION NAME, SCENARIO, RETURN AS PER TESTING
+        # TODO: TRY TO MAINTAIN DIFF BETWEEN ARRANGE, ACT, ASSERT BY COMMENTING
         username = "usha"
         password = "ammu"
         
