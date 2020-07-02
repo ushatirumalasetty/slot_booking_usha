@@ -13,12 +13,8 @@ class BookASlotInteractor:
 
     def book_a_slot_interactor(self, date, start_time, end_time, user_id:int):
         
-        self.storage.book_a_slot(
-                                 user_id=user_id,
+        self.storage.book_a_slot(user_id=user_id,
                                  start_time=start_time,
                                  end_time=end_time,
-                                 date=date
-                                )
-    
-
+                                 date=date)
     

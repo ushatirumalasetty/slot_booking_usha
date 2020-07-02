@@ -1,3 +1,4 @@
+
 {
   "swagger": "2.0",
   "host": "127.0.0.1:8080",
@@ -107,9 +108,8 @@
         "properties": {
           "washing_machine_id": {
             "type": "string"
-          }
-        },
-        "required": [
+          }},
+          "required": [
 					"washing_machine_id"
 				]
       }

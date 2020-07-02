@@ -11,7 +11,7 @@ def washing_machine_dtos():
 
     )]
     return washing_machine_dtos
-'''
+
 @pytest.fixture()
 def previous_or_upcomming_slots_dto():
     previous_or_upcomming_slots_dto = [
@@ -27,4 +27,3 @@ def previous_or_upcomming_slots_dto():
                 date=date(2020,12,2))
         ]
     return previous_or_upcomming_slots_dto
-'''

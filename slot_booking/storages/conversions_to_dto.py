@@ -18,8 +18,8 @@ def convert_to_previous_or_upcomming_slots_dto(user_previous_slot_obj):
     return PreviousOrUpcommingSlotsDto(
             start_time=user_previous_slot_obj.start_time.strftime("%H:%M %p"),
             end_time=user_previous_slot_obj.end_time.strftime("%H:%M %p"),
-            washing_machine_id=user_previous_slot_obj.washing_machine_id,
-               date=user_previous_slot_obj.date.strftime("%Y-%m-%d"))
+            washing_machine_slot_id=user_previous_slot_obj.washing_machine_slot_id,
+            date=user_previous_slot_obj.date.strftime("%Y-%m-%d"))
 
 def convert_to_previous_or_upcomming_slots_dto_list(user_previous_or_upcomming_slots_obj_list):
         user_previous_or_upcomming_slots_dtos_list=[]

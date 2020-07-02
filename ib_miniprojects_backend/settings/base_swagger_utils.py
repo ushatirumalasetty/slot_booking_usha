@@ -18,6 +18,8 @@ from django_swagger_utils.drf_server.utils.general.import_app_settings import \
 
 THIRD_PARTY_APPS = []
 APPS = [
+
+   "auth_service",
    "slot_booking"
 ]
 
@@ -61,6 +63,7 @@ SWAGGER_UTILS = {
         }
     },
     "APPS": {
+        "auth_service":[],
         "slot_booking":[]
     },
     "HOST": os.environ.get('APIGATEWAY_ENDPOINT', '127.0.0.1:8080'),
@@ -72,9 +75,8 @@ API_KEY_AUTHENTICATION_CLASS = \
 CUSTOM_EXCEPTIONS_TO_LOG_IN_SENTRY = []
 
 
-AUTH_USER_MODEL = "slot_booking.User"
 
-# DEFAULT_OAUTH_APPLICATION_NAME = "slot_booking"
+# DEFAULT_OAUTH_APPLICATION_NAME = "auth_service"
 # DEFAULT_OAUTH_CLIENT_ID=""
 # DEFAULT_OAUTH_CLIENT_SECRET=""
 # DEFAULT_OAUTH_SCOPES="read write"

@@ -77,7 +77,5 @@ class PresenterInterface(ABC):
             requests_details_list: List[RequestCompleteDetailsDto]):
         pass
 
-    @abstractmethod
-    def get_token_response_dto(self, tokens_dto, user_login_dto):
-        pass
+    
     

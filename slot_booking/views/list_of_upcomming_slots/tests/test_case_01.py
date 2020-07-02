@@ -4,6 +4,9 @@
 
 from django_swagger_utils.utils.test import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
+from slot_booking.tests.factory.fact import UserFactory, WashingMachineFactory,\
+WashingMachineSlotFactory, UserSlotFactory
+
 
 REQUEST_BODY = """
 {
@@ -16,7 +19,7 @@ TEST_CASE = {
         "path_params": {},
         "query_params": {},
         "header_params": {},
-        "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["superuser"], "type": "oauth2"}},
+        "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["read", "write"], "type": "oauth2"}},
         "body": REQUEST_BODY,
     },
 }
@@ -29,7 +32,25 @@ class TestCase01ListOfUpcommingSlotsAPITestCase(CustomAPITestCase):
     url_suffix = URL_SUFFIX
     test_case_dict = TEST_CASE
 
+    def setupUser(self, username, password):
+        super(TestCase01ListOfUpcommingSlotsAPITestCase, self).setupUser(
+            username=username, password=password
+        )
+        
+    user_obj = UserFactory.create_batch(1, username="261ada3c12181d1")
+    print("*"*100)
+    washing_machine_obj = WashingMachineFactory.create_batch(1)
+    print("*"*100)
+    washing_machine_slot_obj = WashingMachineSlotFactory.create_batch(1, washing_machine=washing_machine_obj[0])
+    print("*"*100)
+    user_slot_obj = UserSlotFactory.create_batch(1, washing_machine_slot=washing_machine_slot_obj[0], user=user_obj[0])
+    print("*"*100)
+
+
     def test_case(self):
-        self.default_test_case() # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        response = self.default_test_case() 
+        
+        self.assert_match_snapshot(
+            name='list_of_upcomming_slots',
+            value=response)
+       

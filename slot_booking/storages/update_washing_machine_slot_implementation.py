@@ -25,7 +25,7 @@ class StorageImplementation(StorageInterface):
         self.check_if_start_time_less_than_end_time(new_start_time, new_end_time)
 
         WashingMachineSlot.objects.\
-        filter(washing_machine__washing_machine_id=washing_machine_id,
+        filter(washing_machine__washing_machine_id=washing_machine_id,\
                day=day,
                start_time=old_start_time,
                end_time=old_end_time).\
